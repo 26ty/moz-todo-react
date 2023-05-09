@@ -13,6 +13,7 @@ export default function Todo({name,completed,id}) {
             <button type="button" className="btn">
               Edit <span className="visually-hidden">Eat</span>
             </button>
+            
             <button type="button" className="btn btn__danger">
               Delete <span className="visually-hidden">Eat</span>
             </button>
