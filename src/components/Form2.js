@@ -3,16 +3,20 @@ import React,{useState} from "react";
 
 export default function Form(props) {
 
-    const [name, setName] = useState('');
+    const [name, setName] = useState("");
 
+    // 監聽input有無更改value
     function handleChange(e) {
-        console.log('Typing!')
+        console.log(e.target.value);
+        setName(e.target.value);
     }
 
+    // 點擊送出時取得name(value)
     function handleSubmit(e) {
         e.preventDefault()
         console.log(typeof props.addTask)
-        props.addTask('Say hello!');
+        props.addTask(name);
+        setName("");
     }
 
     return(
