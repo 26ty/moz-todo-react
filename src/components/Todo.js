@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Todo({name,completed,id,toggleTaskCompleted}) {
+export default function Todo({name,completed,id,toggleTaskCompleted,deleteTask}) {
     return(
         <li className="todo stack-small">
           <div className="c-cb">
@@ -16,11 +16,15 @@ export default function Todo({name,completed,id,toggleTaskCompleted}) {
           </div>
           <div className="btn-group">
             <button type="button" className="btn">
-              Edit <span className="visually-hidden">Eat</span>
+              Edit <span className="visually-hidden">{name}</span>
             </button>
             
-            <button type="button" className="btn btn__danger">
-              Delete <span className="visually-hidden">Eat</span>
+            <button 
+              type="button" 
+              className="btn btn__danger"
+              onClick={() => {deleteTask(id)}}
+            >
+              Delete <span className="visually-hidden">{name}</span>
             </button>
           </div>
         </li>
