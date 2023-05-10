@@ -26,7 +26,7 @@ function App(props) {
   function toggleTaskCompleted(id) {
     // console.log(tasks[id])
     const updatedTasks = tasks.map((task) => {
-      if(id === task.id){
+      if(id === task.id) {
         return {...task,completed: !task.completed}
       }
       return task;
@@ -42,6 +42,17 @@ function App(props) {
     setTasks(remainingTasks)
   }
 
+  // 編輯任務函數
+  function editTask(id, newName) {
+    const editedTaskList = tasks.map((task) => {
+      if(id === task.id) {
+        return {...task,name: newName}
+      }
+      return task;
+    });
+    setTasks(editedTaskList);
+  }
+
   const taskList = tasks.map((task) => (
     <Todo 
       id={task.id}
@@ -50,6 +61,7 @@ function App(props) {
       key={task.id}
       toggleTaskCompleted={toggleTaskCompleted}
       deleteTask={deleteTask}
+      editTask={editTask}
     />
   ));
 
