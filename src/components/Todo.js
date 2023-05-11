@@ -1,17 +1,34 @@
-import React,{useState} from "react";
+import React,{useEffect,useRef,useState} from "react";
+//focus
+function usePrevious(value) {
+  const ref = useRef();
+  useEffect(() => {
+    ref.current = value;
+  });
+  return ref.current;
+}
 
 export default function Todo({name,completed,id,toggleTaskCompleted,deleteTask,editTask}) {
+
   // 判斷檢視畫面 or 編輯畫面 
   const [isEditing, setEditing] = useState(false);
 
   // 保存新名稱狀態
   const [newName,setNewName] = useState("");
 
+  //focus
+  const editFieldRef = useRef(null);
+  const editButtonRef = useRef(null);
+
+  //focus
+  const wasEditing = usePrevious(isEditing);
+
   // 監聽input有無更改value
   function handleChange(e) {
     setNewName(e.target.value);
   }
 
+  // 點擊送出時取得name(value)
   function handleSubmit(e) {
     e.preventDefault();
     editTask(id,newName); // app.js
@@ -33,6 +50,7 @@ export default function Todo({name,completed,id,toggleTaskCompleted,deleteTask,e
           placeholder={name}
           value={newName}
           onChange={handleChange}
+          ref={editFieldRef}
         />
       </div>
       <div className="btn-group">
@@ -71,6 +89,7 @@ export default function Todo({name,completed,id,toggleTaskCompleted,deleteTask,e
           type="button" 
           className="btn"
           onClick={() => setEditing(true)}
+          ref={editButtonRef}
         >
           Edit <span className="visually-hidden">{name}</span>
         </button>
@@ -84,6 +103,17 @@ export default function Todo({name,completed,id,toggleTaskCompleted,deleteTask,e
     </div>
   );
 
+  //focus
+  useEffect(() => {
+    if (!wasEditing && isEditing) {
+      editFieldRef.current.focus();
+    }
+    if (wasEditing && !isEditing) {
+      editButtonRef.current.focus();
+    }
+  }, [wasEditing, isEditing])
+
+  console.log("main render");
   return(
     <li className="todo">{isEditing ? editingTemplate:viewTemplate}</li>
         // <li className="todo stack-small">
