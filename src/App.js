@@ -79,6 +79,7 @@ function App(props) {
 
   /*Todo列表 */
   const taskList = tasks
+    // .filter(FILTER_MAP[filter])
     .map((task) => (
       <Todo 
         id={task.id}
