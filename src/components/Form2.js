@@ -15,7 +15,7 @@ export default function Form(props) {
     function handleSubmit(e) {
         e.preventDefault()
         console.log(typeof props.addTask)
-        props.addTask(name);
+        props.addTask(name); //app.js
         setName("");
     }
 

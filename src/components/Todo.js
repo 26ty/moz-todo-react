@@ -1,16 +1,39 @@
 import React,{useState} from "react";
 
 export default function Todo({name,completed,id,toggleTaskCompleted,deleteTask,editTask}) {
+  // 判斷檢視畫面 or 編輯畫面 
   const [isEditing, setEditing] = useState(false);
+
+  // 保存新名稱狀態
+  const [newName,setNewName] = useState("");
+
+  // 監聽input有無更改value
+  function handleChange(e) {
+    setNewName(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    editTask(id,newName); // app.js
+    setNewName("");
+    setEditing(false);
+  }
 
   //編輯畫面
   const editingTemplate = (
-    <form className="stack-small">
+    <form className="stack-small" onSubmit={handleSubmit}>
       <div className="form-group">
         <label className="todo-label" htmlFor={id}>
           New name for {name}
         </label>
-        <input id={id} className="todo-text" type="text" placeholder={name}/>
+        <input 
+          id={id} 
+          className="todo-text" 
+          type="text" 
+          placeholder={name}
+          value={newName}
+          onChange={handleChange}
+        />
       </div>
       <div className="btn-group">
         <button 
@@ -28,6 +51,7 @@ export default function Todo({name,completed,id,toggleTaskCompleted,deleteTask,e
       </div>
     </form>
   );
+
   //檢視畫面
   const viewTemplate = (
     <div className="stack-small">
